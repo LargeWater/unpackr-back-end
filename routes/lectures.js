@@ -6,7 +6,7 @@ const router = Router()
 
 /*---------- Public Routes ----------*/
 
-
+router.get('/', lecturesCtrl.index)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, lecturesCtrl.create)
