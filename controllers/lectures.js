@@ -28,7 +28,34 @@ function index(req, res) {
   })
 }
 
+function update(req, res) {
+  Lecture.findById(req.params.id)
+  .then(lecture => {
+    Lecture.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .then(updatedLecture => res.json(updatedLecture))
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json(err)
+  })
+}
+
+function deleteLecture(req, res) {
+  Lecture.findById(req.params.id)
+  .then(lecture => {
+    Lecture.findByIdAndDelete(lecture._id)
+    .then(deletedLecture => {
+      res.json(deletedLecture)
+    })
+  }) .catch(err => {
+    console.log(err)
+    res.status(500).json(err)
+  })
+}
+
 export { 
   create,
-  index
+  index,
+  update,
+  deleteLecture as delete
 }

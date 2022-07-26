@@ -10,6 +10,7 @@ router.get('/', lecturesCtrl.index)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, lecturesCtrl.create)
-// router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
+router.put('/:id', checkAuth, lecturesCtrl.update)
+router.delete('/:id', checkAuth, lecturesCtrl.delete)
 
 export { router }
