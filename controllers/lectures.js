@@ -5,11 +5,10 @@ function create(req, res) {
   req.body.author = req.user.profile
   Lecture.create(req.body)
   .then(lecture => 
-    Profile.findById(req.user.profile._id)
-    .then(profile => {
-      profile.lectures.push(lecture._id)
-      profile.save()
-      .then(() => res.json(lecture))
+    Profile.findById(lecture._id)
+    .populate('author')
+    .then(populatedLecture => {
+      res.json(populatedLecture)
     })
   )
   .catch(err => {
@@ -21,7 +20,9 @@ function create(req, res) {
 function index(req, res) {
   Lecture.find({})
   .populate('author')
-  .then(lectures => res.json(lectures))
+  .then(lectures =>  {
+    res.json(lectures)
+  })
   .catch(err => {
     console.log(err)
     res.status(500).json(err)
